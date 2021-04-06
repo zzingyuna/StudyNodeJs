@@ -1,0 +1,12 @@
+body{
+	background-color: black;
+	color: white;
+}
+
+a.btnLogin{
+    background-color: ghostwhite;
+    border: 1px solid ghostwhite;
+    text-decoration: 29px;
+    padding: 5px 10px;
+    border-radius: 10px;
+}

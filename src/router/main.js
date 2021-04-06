@@ -1,4 +1,3 @@
-
 // 해당 소스에서 url 주소창에 쓴 경로를 기준으로 바인딩할 페이지 설정
 // localhost:3000 -> index.html호출
 // localhost:3000/about -> about.html호출
@@ -7,17 +6,65 @@ module.exports = function(app, fs){
 	app.get('/',function(req, res){
 		var sess = req.session;
 		res.render('index.html',{
-			username: sess==undefined?"":sess.name
+			username: sess==undefined?"":sess.username,
+			name: sess==undefined?"":sess.name,
+			age: sess==undefined?"":sess.age
 		});
 	});
 	app.get('/about',function(req,res){
 		res.render('about.html');
 	});
-	app.get('/one',function(req,res){
-		res.render('test.html');
+	app.get('/login',function(req,res){
+		var sess = req.session;
+		if (sess.name==undefined ) {
+			res.render('login.html');
+		}
+		else {
+			res.render('ejs2',{
+				title: "MY HOMEPAGE2",
+				tempVar: 10,
+				username: sess==undefined?"":sess.username, // 세션값 사용하기
+				name: sess==undefined?"":sess.name // 세션값 사용하기
+			})
+		}
 	});
-	app.get('/two',function(req,res){
-		res.render('test2.html');
+	app.post('/login',function(req,res){
+		var username = req.body.id;
+		var password = req.body.pw;
+		console.log(username);
+		console.log(password);
+
+		// 세션값 담기
+		var sess = req.session;
+		var result = {};
+		fs.readFile( __dirname + "/../data/user.json", 'utf8',  function(err, data){
+            var users = JSON.parse(data);
+            if(!users[username]){
+                // USERNAME NOT FOUND
+                result["success"] = 0;
+                result["error"] = "not found";
+				return res.render('login.html');
+            }
+
+            if(users[username]["password"] == password){
+                result["success"] = 1;
+                sess.username = username;
+                sess.name = users[username]["name"];
+				sess.age = users[username]["age"];
+				/*
+				return res.render('index.html',{
+					username: sess==undefined?"":sess.username, // 세션값 사용하기
+					name: sess==undefined?"":sess.name // 세션값 사용하기
+				});
+				*/
+				return res.redirect('/');
+            }else{
+                result["success"] = 0;
+                result["error"] = "incorrect";
+				return res.render('login.html');
+            }
+
+        })
 	});
 	app.get('/ejs1',function(req, res){
 		var sess = req.session;
@@ -43,7 +90,7 @@ module.exports = function(app, fs){
 	*/
 	// list
 	app.get('/users',function(req, res){
-		fs.readFile(__dirname+"/../data/"+"user.json", 'utf8', function(err, data){
+		fs.readFile(__dirname+"/../data/user.json", 'utf8', function(err, data){
 			//console.log(data);
 			res.end(data);
 		});
@@ -51,7 +98,7 @@ module.exports = function(app, fs){
 
 	// get one
 	app.get('/getUser/:username',function(req, res){
-		fs.readFile(__dirname+"/../data/"+"user.json", 'utf8', function(err, data){
+		fs.readFile(__dirname+"/../data/user.json", 'utf8', function(err, data){
 			var users = JSON.parse(data);
 			res.json(users[req.params.username]);
 		});

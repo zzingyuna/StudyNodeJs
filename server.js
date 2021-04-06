@@ -18,7 +18,8 @@ app.get('/', function(req, res){
 */
 
 // html 위치 정의
-app.set('views', './views');
+app.set('views', ['./src/views','./src/ejs']);
+
 // html렌더링 할때 EJS엔진을 사용하도록 한다
 app.set('view engine', 'ejs');
 // EJS엔진을 사용해서 html파일을 불러온다
@@ -26,7 +27,7 @@ app.engine('html', require('ejs').renderFile);
 
 // css파일 사용을 위해 아래와 같이 
 // public 폴더안에 파일을 사용한다고 선언해준다
-app.use(express.static('public'));
+app.use(express.static('./src/css'));
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded());
@@ -46,4 +47,4 @@ var server = app.listen(3000, function(){
 });
 
 // main.js 파일을 불러온다 (라우터 기능:url주소창에 입력한 주소와 실제 페이지 파일명 매칭)
-var router = require('./router/main')(app, fs);
+var router = require('./src/router/main')(app, fs);

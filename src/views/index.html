@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Main</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <p>메인 페이지 입니다</p><br/>
+
+    <% if(username) { %>
+      <h2>Welcom! <%= username %></h2>
+      <p>이름은 <%= name %> 이오,</p>
+      <p>나이는 <%= age %>세 로다..</p>
+    <% } else { %>
+      <p>로그을 하려면 아래 버튼을..</p>
+      <a href="/login" class="btnLogin">login</a>
+    <% } %>
+
+  </body>
+</html>
