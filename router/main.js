@@ -20,8 +20,10 @@ module.exports = function(app, fs){
 		res.render('test2.html');
 	});
 	app.get('/ejs1',function(req, res){
+		var sess = req.session;
 		res.render('index',{
 			title: "MY HOMEPAGE",
+			username: sess==undefined?"":sess.username,
 			tempVar: 5
 		})
 	});
