@@ -10,3 +10,29 @@ a.btnLogin{
     padding: 5px 10px;
     border-radius: 10px;
 }
+
+div.footer{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 60px;
+    background-color: #363636;
+}
+
+.footer > div {
+    display: flex;
+}
+
+.footer > div > ul {
+    list-style: none;
+    display: flex;
+}
+
+.footer > div > ul > li {
+    padding-left: 10px;
+}
+
+.footer > div > a {
+    padding-left: 70px;
+}

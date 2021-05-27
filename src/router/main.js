@@ -5,10 +5,16 @@ module.exports = function(app, fs){
 
 	app.get('/',function(req, res){
 		var sess = req.session;
-		res.render('index.html',{
-			username: sess==undefined?"":sess.username,
-			name: sess==undefined?"":sess.name,
-			age: sess==undefined?"":sess.age
+		// res.render('index.html',{
+		// 	username: sess==undefined?"":sess.username,
+		// 	name: sess==undefined?"":sess.name,
+		// 	age: sess==undefined?"":sess.age
+		// });
+		res.render('ejs2',{
+			title: "MY HOMEPAGE2",
+			tempVar: 10,
+			username: sess==undefined?"":sess.username, // 세션값 사용하기
+			name: sess==undefined?"":sess.name // 세션값 사용하기
 		});
 	});
 	app.get('/about',function(req,res){
