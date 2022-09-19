@@ -1,5 +1,8 @@
+
 @ECHO OFF
 
-set path=C:\Users\yuna\Desktop\Source\StudyNodeJs;%PATH%
-start  npm start
-exit
+cd C:\Users\yuna\Desktop\Source\StudyNodeJs && npm start
+
+
+@REM set path=C:\Users\yuna\Desktop\Source\StudyNodeJs;%PATH%
+@REM start  npm start
